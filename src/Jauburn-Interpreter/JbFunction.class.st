@@ -30,7 +30,13 @@ JbFunction >> body: anObject [
 JbFunction >> call: arguments in: callEnvironment [
 	"You need to implement this method!  arguments will contain the arguments to pass to this function and callEnvironment will contain the environment in place when this function was called."
 	
-	self shouldBeImplemented 
+	"self shouldBeImplemented "
+	
+  "body valueWithPossibleArgs: (arguments collect: [:each | each evaluateIn: callEnvironment ])."
+|newEnv |
+newEnv := JbEnvironment newFromKeys: parameters  andValues: arguments.
+newEnv outerEnvironment: environment.
+[body do: [ :each | |v| v := each executeIn: newEnv]] on: ReturnStatement do: [ :ex | ^ ex returnValue ]. 
 ]
 
 { #category : #accessing }

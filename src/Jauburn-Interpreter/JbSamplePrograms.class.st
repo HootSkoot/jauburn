@@ -7,6 +7,24 @@ Class {
 	#category : #'Jauburn-Interpreter-SamplePrograms'
 }
 
+{ #category : #'as yet unclassified' }
+JbSamplePrograms class >> gcd [
+|parser interpreter ast target|
+parser := JbParser new.
+interpreter := JbInterpreter new.
+ast := parser parse: 'var a = stringToNumber(input ("Enter first number."));var b = stringToNumber(input ("Enter second number."));var gcd = function (x,y) {if (x==0) {return y;} else {return gcd(mod (y,x),x);}};var t = gcd(a,b);println (t);'.
+target := interpreter interpret: ast.
+]
+
+{ #category : #'as yet unclassified' }
+JbSamplePrograms class >> newtonSquareRoot [
+|parser interpreter ast target|
+parser := JbParser new.
+interpreter := JbInterpreter new.
+ast := parser parse: 'var target = stringToNumber(input ("Enter a number to find its root"));var root = target;var count = root+10;var oldRoot = 1;while (oldRoot!=0) {count = root;root = (root + (target/root))/2;println (root);oldRoot = count - root;}'.
+target := interpreter interpret: ast.
+]
+
 { #category : #'sample programs' }
 JbSamplePrograms class >> noFunctions [
 	"self run: #noFunctions"

@@ -10,6 +10,13 @@ JbParserTest >> parserClass [
 	^JbParser
 ]
 
+{ #category : #tests }
+JbParserTest >> testAnonFuncs [
+|stmt|
+"stmt := self parse: 'var y = print 42;'."
+stmt := self parse: 'var f = function (x) {};'.
+]
+
 { #category : #'tests-statements' }
 JbParserTest >> testAnonymousFunctionDefinitionWithAssignment [
 	| func |
@@ -190,7 +197,7 @@ JbParserTest >> testIfElseStatement [
 JbParserTest >> testIfStatement [
 
 	| stmt |
-	stmt := self parse: 'if (x == 1) {}' rule: #ifStatement.
+	stmt := self parse: 'if (x==1) {}' rule: #ifStatement .
 	self assert: stmt condition operator equals: '=='.
 	self assert: stmt trueStatements isEmpty
 ]
@@ -285,4 +292,14 @@ JbParserTest >> testVariableDeclarationStatement [
 	self assert: stmt identifier equals: 'x'.
 	stmt := self parse: 'var monkey = 37*x;' rule: #variableDeclarationStatement.
 	self assert: stmt identifier equals: 'monkey'
+]
+
+{ #category : #tests }
+JbParserTest >> testWhileLoop [
+|stmt|
+stmt := self parse: 'while (x<=10) {var y=x;}' rule: #whileStatement.
+self assert: (stmt isKindOf: JbWhileLoopNode).
+self assert: (stmt condition isKindOf: JbArity2OperatorNode ).
+self assert: stmt statements size equals: 1.
+
 ]

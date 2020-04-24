@@ -18,6 +18,17 @@ JbFunctionNode >> body: anObject [
 	body := anObject
 ]
 
+{ #category : #'as yet unclassified' }
+JbFunctionNode >> evaluateIn: environment [
+	| pf |
+	pf := JbFunction new.
+	pf
+		parameters: (parameters collect: [:each| each identifier ]);
+		body: body;
+		environment: environment.
+	^ pf
+]
+
 { #category : #accessing }
 JbFunctionNode >> parameters [
 	^ parameters

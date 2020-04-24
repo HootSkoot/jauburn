@@ -1,37 +1,37 @@
 Class {
-	#name : #JbIfNode,
+	#name : #JbWhileLoopNode,
 	#superclass : #Object,
 	#instVars : [
 		'condition',
-		'trueStatements'
+		'statements'
 	],
 	#category : #'Jauburn-AST-Core'
 }
 
 { #category : #accessing }
-JbIfNode >> condition [
+JbWhileLoopNode >> condition [
 	^ condition
 ]
 
 { #category : #accessing }
-JbIfNode >> condition: anObject [
+JbWhileLoopNode >> condition: anObject [
 	condition := anObject
 ]
 
 { #category : #'as yet unclassified' }
-JbIfNode >> executeIn: environment [ 
+JbWhileLoopNode >> executeIn: environment [ 
 " ((environment at: identifier ) call: (self arguments do: [ :each | each evaluateIn: environment]) in: environment)"
 
 "(environment at: identifier ) call: (self arguments collect: [ :each | each evaluateIn: environment  ]) in: environment."
-^( condition evaluateIn: environment  ) ifTrue: [trueStatements do: [ :each | each executeIn: environment ]].
+^[ condition evaluateIn: environment  ] whileTrue: [statements do: [ :each | each executeIn: environment ]].
 ]
 
 { #category : #accessing }
-JbIfNode >> trueStatements [
-	^ trueStatements
+JbWhileLoopNode >> statements [
+	^ statements
 ]
 
 { #category : #accessing }
-JbIfNode >> trueStatements: anObject [
-	trueStatements := anObject
+JbWhileLoopNode >> statements: anObject [
+	statements := anObject
 ]
